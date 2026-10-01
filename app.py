@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+import os
 app = Flask(__name__)
 @app.route('/multiplicar', methods=['GET'])
 def multiplicar():
@@ -15,4 +16,8 @@ def multiplicar():
 		return jsonify({"error": "Parámetros inválidos"}), 400
 
 if __name__ == '__main__':
-	app.run(debug=True)
+	app.run(
+		host="0.0.0.0",
+		port=int(os.getenv("PORT","5000")),
+		debug=os.getenv("FLASK_DEBUG","0") == "1",
+	       )
